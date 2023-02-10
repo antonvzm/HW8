@@ -4,13 +4,23 @@ import csv
 import codecs
 
 def add_record():
-    with open("hrdata.csv", 'a', newline= '', encoding='utf-8') as csvfile:
-        line_count = sum(1 for line in open('hrdata.csv'))
-        writer = csv.writer(csvfile, delimiter = ";")
-        writer.writerow([line_count, input("Введите имя сотрудника: "), 
-                         input("Введите фамилию сотрудника: "), 
-                         input("Введите должность сотрудника: "),
-                         input("Введите номер телефона сотрудника: ")])
+    line_count = sum(1 for line in open('hrdata.csv'))
+    if line_count == 0:
+        with open("hrdata.csv", 'a', newline= '', encoding='utf-8') as csvfile:
+            writer = csv.writer(csvfile, delimiter = ",")
+            writer.writerow(["ID","Name","Last_name","Job,phone_num"])
+            writer = csv.writer(csvfile, delimiter = ",")
+            writer.writerow(["1", input("Введите имя сотрудника: "), 
+                            input("Введите фамилию сотрудника: "), 
+                            input("Введите должность сотрудника: "),
+                            input("Введите номер телефона сотрудника: ")])
+    else:    
+        with open("hrdata.csv", 'a', newline= '', encoding='utf-8') as csvfile:
+            writer = csv.writer(csvfile, delimiter = ",")
+            writer.writerow([line_count, input("Введите имя сотрудника: "), 
+                            input("Введите фамилию сотрудника: "), 
+                            input("Введите должность сотрудника: "),
+                            input("Введите номер телефона сотрудника: ")])
 
 
 def check_availability(num):
