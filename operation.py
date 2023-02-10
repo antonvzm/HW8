@@ -4,47 +4,45 @@ import csv
 import codecs
 
 def add_record():
-    line_count = sum(1 for line in open('hrdata.csv'))
-    if line_count == 0:
-        with open("hrdata.csv", 'a', newline= '', encoding='utf-8') as csvfile:
+    logging.info("add record")
+    with open("hrdata.csv", 'a', newline= '', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile, delimiter = ",")
-            writer.writerow(["ID","Name","Last_name","Job","phone_num"])
-            writer = csv.writer(csvfile, delimiter = ",")
-            writer.writerow(["1", input("Введите имя сотрудника: "), 
+            writer.writerow([input("Введите имя сотрудника: "), 
                             input("Введите фамилию сотрудника: "), 
-                            input("Введите должность сотрудника: "),
-                            input("Введите номер телефона сотрудника: ")])
-    else:    
-        with open("hrdata.csv", 'a', newline= '', encoding='utf-8') as csvfile:
-            writer = csv.writer(csvfile, delimiter = ",")
-            writer.writerow([line_count, input("Введите имя сотрудника: "), 
-                            input("Введите фамилию сотрудника: "), 
-                            input("Введите должность сотрудника: "),
-                            input("Введите номер телефона сотрудника: ")])
+                            input("Введите должность сотрудника: ")])
 
 
-def check_availability(num):
-    line_count = sum(1 for line in open('hrdata.csv'))
-    while True:
-        if line_count < num or num < 0:
-                logging.error("error: row selection error")
-                print("Ошибка: такой строки нет")
-                num = input("Введите номер строки: ")
-        else:
-            break
-    return num
-
-def search_record(num):
+def serch_record(word):
+    logging.info("serch record")
     inp = iter(codecs.open('hrdata.csv', encoding='utf-8').readlines())
     for i in inp:
-        if num[0] in i:
+        if word in i:
             print(i)
 
-def print_data():  
+def print_data():
+    logging.info("print data")  
     df = pandas.read_csv('hrdata.csv')   
     print(df)   
 
-add_record()
-# print_data()
-# search_record(input())
+def edit_record(num):
+    logging.info("edit record")
+    with open("hrdata.csv", encoding='utf-8') as file:
+        array = file.readlines()
+    name = input("Введите имя сотрудника: ")
+    surname = input("Введите фамилию сотрудника: ")
+    job = input("Введите должность сотрудника: ")
+    array[num+1] = f'{name},{surname},{job}\n'
+    f = open('hrdata.csv', 'w', encoding='utf-8')
+    f.writelines(array) 
+    f.close ()
+
+def delete_record(num):
+    logging.info("delete record")
+    with open("hrdata.csv", encoding='utf-8') as file:
+        array = file.readlines()
+    array.pop(num+1)
+    f = open('hrdata.csv', 'w', encoding='utf-8')
+    f.writelines(array) 
+    f.close ()
+
 
