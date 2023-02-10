@@ -8,7 +8,7 @@ def add_record():
     if line_count == 0:
         with open("hrdata.csv", 'a', newline= '', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile, delimiter = ",")
-            writer.writerow(["ID","Name","Last_name","Job,phone_num"])
+            writer.writerow(["ID","Name","Last_name","Job","phone_num"])
             writer = csv.writer(csvfile, delimiter = ",")
             writer.writerow(["1", input("Введите имя сотрудника: "), 
                             input("Введите фамилию сотрудника: "), 
